@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet debug page</title>
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ==" crossorigin="" />
+	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js" integrity="sha512-WXoSHqw/t26DszhdMhOXOkI7qCiv5QWXhH9R7CgvgZMHz1ImlkVQ3uNsiQKu5wwbbxtPzFXd1hK4tzno2VqhpA==" crossorigin=""></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="mobile.css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <link rel="stylesheet" href="../dist/leaflet.awesome-markers.css">
+	<link rel="stylesheet" href="../dist/MarkerCluster.css" />
+	<link rel="stylesheet" href="../dist/MarkerCluster.Default.css" />
+	<script src="../dist/leaflet.markercluster-src.js"></script>
+	<script src="realworld.388.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="../dist/leaflet.awesome-markers.js"></script>
+
+</head>
+<body>
+
+	<div id="map"></div>
+	<div id="something" style="z-index: 100; position: absolute;top:0px;right: 0px; min-width: 10px; min-height: 10px; background-color: #000; 	">A</div>
+	<script type="text/javascript">
+		var incr=1
+		var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				maxZoom: 18,
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
+			}),
+			latlng = L.latLng(28.6778623,77.2589418);
+
+		var map = L.map('map', {center: latlng, zoom: 17, layers: [tiles]});
+
+		var markers = L.markerClusterGroup();
+
+var marker = L.marker(L.latLng(28.6778623,77.261), { title: "Device ID:"+incr });
+			marker.bindPopup("<b>School/College: Robogyan Lab</b> <br> Device ID:"+incr);
+			incr++;
+			markers.addLayer(marker);
+
+		map.addLayer(markers);
+var overlayMaps = {
+    "Vehicles": markers
+};
+L.control.layers(null, overlayMaps).addTo(map);		map.addLayer(markers);
+
+	$('#something').click(function(){
+			var marker = L.marker(L.latLng(28.6778623,77.261), { title: "Device ID:"+incr,icon: L.AwesomeMarkers.icon({icon: 'motorcycle', prefix: 'fa', markerColor: 'red'}) });
+			marker.bindPopup("<b>Vehicle DL14SA3347</b> <br> Device ID:"+incr);
+			incr++;
+			markers.addLayer(marker);
+
+
+		});
+	</script>
+</body>
+</html>
